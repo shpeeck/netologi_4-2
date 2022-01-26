@@ -1,7 +1,17 @@
-import React from "react";
+import PropTypes from "prop-types";
 
 export default function Table({ wlk, onDel }) {
   if (wlk.lenght !== 0) {
+    wlk = wlk.sort(function (a, b) {
+      if (b.date > a.date) {
+        return 1;
+      }
+      if (b.date < a.date) {
+        return -1;
+      }
+      return 0;
+    });
+
     return wlk.map(function (n) {
       return (
         <tr key={n.id}>
@@ -15,3 +25,8 @@ export default function Table({ wlk, onDel }) {
     });
   }
 }
+
+Table.propTypes = {
+  wlk: PropTypes.array,
+  onDel: PropTypes.func
+};

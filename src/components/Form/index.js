@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import FormInput from "../FormInput";
 import FormButton from "../FormButton";
 
@@ -6,8 +7,6 @@ export default function Form({ fun }) {
   const [date, setDate] = useState();
   const [walk, setWalk] = useState();
   const onRegister = (e) => {
-    // console.log("Date", date);
-    // console.log("Walk", walk);
     fun(date, walk);
     e.preventDefault();
   };
@@ -27,6 +26,7 @@ export default function Form({ fun }) {
       />
       <FormInput
         type="number"
+        step="any"
         id={"walk"}
         name={"Пройдено км"}
         onChange={onWalkChange}
@@ -35,3 +35,7 @@ export default function Form({ fun }) {
     </form>
   );
 }
+
+Form.propTypes = {
+  fun: PropTypes.func
+};

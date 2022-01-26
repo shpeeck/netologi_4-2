@@ -5,15 +5,35 @@ import Table from "./components/Table";
 
 export default function App() {
   const [data, setData] = useState([]);
-  const addData = (i, r) => {
-    setData([{ id: Date.now(), date: i, km: r }, ...data]);
-    console.log(data);
+
+  function isDate(newDate, newKm) {
+    const isdat = [...data.filter((i) => newDate === i.date)];
+    return isdat.length;
+  }
+
+  const addData = (newDate, newKm) => {
+    if (newDate && newKm) {
+      if (isDate(newDate, newKm) !== 0) {
+        const ff = [...data.filter((i) => newDate !== i.date)];
+        const fa = [...data.filter((i) => newDate === i.date)];
+        setData([
+          {
+            id: Date.now(),
+            date: newDate,
+            km: Number(newKm) + Number(fa[0].km)
+          },
+          ...ff
+        ]);
+      } else {
+        setData([{ id: Date.now(), date: newDate, km: newKm }, ...data]);
+      }
+    }
   };
+
   const onDel = (id) => {
-    console.log(id);
-    setData([...data.filter((i) => i.id !== id)]);
-    // setData(data.filter((p) => p !== e));
+    setData([...data.filter((newDate) => newDate.id !== id)]);
   };
+
   return (
     <div className="App">
       <Form fun={addData} />
